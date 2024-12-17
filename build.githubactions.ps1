@@ -344,8 +344,8 @@ function WorkflowCheck {
 
 function ComparePackageVersions {
     # API URLs for branch and main
-    $url_branch = "https://api.github.com/repos/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Implementation/contents/configuration.packages.json?ref=$Env:current_branch"
-    $url_main = "https://api.github.com/repos/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Implementation/contents/configuration.packages.json?ref=main"
+    $url_branch = "https://api.github.com/repos/axelmarquezh/Ed-Fi-ODS-Implementation/contents/configuration.packages.json?ref=$Env:current_branch"
+    $url_main = "https://api.github.com/repos/axelmarquezh/Ed-Fi-ODS-Implementation/contents/configuration.packages.json?ref=main"
 
     $headers = @{
         Authorization = "Bearer $env:EDFI_ODS_TOKEN"

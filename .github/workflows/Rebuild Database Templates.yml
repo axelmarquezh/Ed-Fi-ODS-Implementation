@@ -82,7 +82,7 @@ jobs:
       shell: pwsh
       run: |
 
-        $url = "https://api.github.com/repos/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Implementation/branches/${{ env.current_branch }}"
+        $url = "https://api.github.com/repos/axelmarquezh/Ed-Fi-ODS-Implementation/branches/${{ env.current_branch }}"
         .\build.githubactions.ps1  TestBranchExists -RepoName "Ed-Fi-ODS-Implementation" -BranchName "${{ env.current_branch }}" -Url $url
         $url = "https://api.github.com/repos/Ed-Fi-Alliance-OSS/Ed-Fi-ODS/branches/${{ env.current_branch }}"
         .\build.githubactions.ps1  TestBranchExists -RepoName "Ed-Fi-ODS" -BranchName "${{ env.current_branch }}" -Url $url
@@ -93,7 +93,7 @@ jobs:
       shell: pwsh
       run: |
         $workflow_file_name = "Rebuild Database Templates.yml"
-        $url = "https://api.github.com/repos/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Implementation/actions/workflows/$workflow_file_name/runs?branch=${{ env.current_branch }}"
+        $url = "https://api.github.com/repos/axelmarquezh/Ed-Fi-ODS-Implementation/actions/workflows/$workflow_file_name/runs?branch=${{ env.current_branch }}"
         $expectedConclusions = @('failure', 'cancelled')
         .\build.githubactions.ps1  'WorkflowCheck' -Url $url -ExpectedStatus 'completed' -ExpectedConclusions $expectedConclusions -StatusEnvName 'failed_buildexists'
               
@@ -106,7 +106,7 @@ jobs:
         workflow_conclusion: ("failure","cancelled")
         path: ${{ github.workspace }}/
         run_id: ${{  env.rebuild_database_templates_lastrunId }}
-        repo: Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Implementation
+        repo: axelmarquezh/Ed-Fi-ODS-Implementation
         check_artifacts: true
         allow_forks: false
         if_no_artifact_found: ignore
@@ -120,7 +120,7 @@ jobs:
         Write-Host "oneeightyDaysAgo Date and Time in ISO 8601 format: $oneEightyDaysAgo"
         $branchName = "${{ env.current_branch }}"
         $sinceDate = $oneEightyDaysAgo 
-        $implementationUrl = "https://api.github.com/repos/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Implementation/commits?sha=$branchName&since=$sinceDate&page=1&per_page=200"
+        $implementationUrl = "https://api.github.com/repos/axelmarquezh/Ed-Fi-ODS-Implementation/commits?sha=$branchName&since=$sinceDate&page=1&per_page=200"
         .\build.githubactions.ps1 'CreateOrUpdateRepositoriesJson' -Url $implementationUrl -RepoName 'Ed-Fi-ODS-Implementation'
 
     - name: Read the last commit for Ed-Fi-ODS and store it in repositories.json 

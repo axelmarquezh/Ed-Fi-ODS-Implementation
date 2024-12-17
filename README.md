@@ -1,6 +1,6 @@
 # Ed-Fi-ODS-Implementation
 
-[![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS/badge)](https://securityscorecards.dev/viewer/?uri=github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS-Implementation/)
+[![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/Ed-Fi-Alliance-OSS/Ed-Fi-ODS/badge)](https://securityscorecards.dev/viewer/?uri=github.com/axelmarquezh/Ed-Fi-ODS-Implementation/)
 
 This repository hosts the end-user applications and extensions for the Ed-Fi Operational Data Store (ODS) and Ed-Fi ODS API.
 
