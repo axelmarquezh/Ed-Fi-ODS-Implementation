@@ -71,48 +71,4 @@ jobs:
           ]        
     name: ${{ matrix.dockerfile.name }}/${{ matrix.dockerfile.path }} Image for (Standard ${{ matrix.StandardVersion }} Extension ${{ matrix.ExtensionVersion }})     
     steps:
-      - name: Check for Docker Hub Token
-        if: ${{ env.REPOSITORY_OWNER == 'Ed-Fi-Alliance-OSS' && env.DOCKER_HUB_TOKEN == '' }}
-        run: | 
-          echo "::error::Missing Docker Hub Token"
-          exit 1   
-      - name: Exit success if Docker Hub Token is missing in forked repository
-        if: ${{ env.DOCKER_HUB_TOKEN == '' }}
-        run: |
-          echo "Skipping Publish"           
-      - name: Wait 20s for Azure Artifacts caching
-        run: sleep 20
-
-      - name: Checkout Repository
-        if: ${{ env.DOCKER_HUB_TOKEN != '' }}
-        uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4
-
-      - name: Log in to Docker Hub
-        if: ${{ env.DOCKER_HUB_TOKEN != '' }}
-        uses: docker/login-action@343f7c4344506bcbf9b4de18042ae17996df046d  # v3.0.0
-        with:
-          username: ${{ env.DOCKER_USERNAME }}
-          password: ${{ env.DOCKER_HUB_TOKEN }}
-
-      - name: Build  ${{ matrix.dockerfile.name }} image in path ${{ matrix.dockerfile.path }} and Push
-        if: ${{ env.DOCKER_HUB_TOKEN != '' }}
-        run: |
-          # Note: all images will receive the same version number for this Docker release
-          if (($env:EVENT_NAME -eq "release" -and $env:EVENT_ACTION -eq "published") -or ($env:EVENT_NAME -eq "workflow_dispatch")) {
-
-            $package_version="${{ env.PACKAGE_VERSION }}"
-            if ($env:EVENT_NAME -eq "workflow_dispatch") {
-              $package_version="${{ inputs.package_version }}"
-            }
-
-            ./get-versions.ps1 -PackageVersion $package_version -StandardVersion ${{ matrix.StandardVersion }} -ExtensionVersion ${{ matrix.ExtensionVersion }}
-            ./Invoke-Build.ps1 -Push -PackageVersion $package_version -Patch ${{ github.run_number }}  -ImageName ${{ matrix.dockerfile.name }} -Path ${{ matrix.dockerfile.path }}
-            Write-Host "This step is triggered manually or by a published release."
-          }
-          else
-          {
-            ./get-versions.ps1 -PackageVersion ${{ env.PACKAGE_VERSION }} -StandardVersion ${{ matrix.StandardVersion }} -ExtensionVersion ${{ matrix.ExtensionVersion }} -PreRelease
-            ./Invoke-Build.ps1 -Push -PackageVersion ${{ env.PACKAGE_VERSION }} -Patch ${{ github.run_number }} -PreRelease  -ImageName ${{ matrix.dockerfile.name }} -Path ${{ matrix.dockerfile.path }}
-          }
-        working-directory: Docker
-        shell: pwsh
+      - run: echo "success"
