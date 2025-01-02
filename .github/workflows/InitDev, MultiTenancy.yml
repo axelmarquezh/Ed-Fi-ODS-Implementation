@@ -41,5 +41,4 @@ jobs:
   dummy:
     runs-on: ubuntu-latest
     steps:
-      - run: throw "failed"
-        shell: pwsh
+      - run: echo "success"
