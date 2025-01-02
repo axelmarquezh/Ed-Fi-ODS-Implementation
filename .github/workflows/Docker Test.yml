@@ -29,15 +29,17 @@ env:
   PACKAGE_VERSION: "7.4"
 
 jobs:
-  cancel-if-required-workflows-did-not-succeed:
-    if: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.conclusion != 'success' }}
+  assert-all-required-workflows-succeeded:
     runs-on: ubuntu-24.04
     steps:
-      - run: throw "Cancelling because the required workflows did not succeed."
-        shell: pwsh
+      - uses: ahmadnassri/action-workflow-run-wait@2aa3d9e1a12ecaaa9908e368eaf2123bb084323e #v1.4.4
+        with:
+            timeout: 1800000
+            delay: 10000
+            ignore-cancelled: true # Treat canceled as success
 
   docker-lint:
-    needs: cancel-if-required-workflows-did-not-succeed
+    needs: assert-all-required-workflows-succeeded
     runs-on: ubuntu-24.04
     strategy:
       matrix:
@@ -58,7 +60,7 @@ jobs:
       - run: echo "success"
 
   FindStandardAndExtensionVersions:
-    needs: cancel-if-required-workflows-did-not-succeed
+    needs: assert-all-required-workflows-succeeded
     uses: Ed-Fi-Alliance-OSS/Ed-Fi-ODS/.github/workflows/Find Standard and Extension Versions.yml@874b608a0f3a14243e0035dd1222169fafcbe8d3
     with:
       calling_branch: ${{ github.head_ref || github.ref_name }}
